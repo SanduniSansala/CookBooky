@@ -1,26 +1,39 @@
-import React from 'react';
-import image1 from '../assets/9.jpg'; 
-import image2 from '../assets/10.jpg'; 
+import React, {useState} from 'react';
+import image1 from '../assets/9.jpg';
+import image2 from '../assets/10.jpg';
 
 const recipes = [
-    {
-        id: 1,
-        name: 'Chicken Pasta',
-        image: image1, // Set this image here
-        rating: 4,
-        description: 'A delicious chicken pasta recipe.',
-      },
-      {
-        id: 2,
-        name: 'Raspberry Pastry',
-        image: image2, // Set this image here too
-        rating: 5,
-        description: 'A sweet and tangy raspberry pastry.',
-      },
-  // Add more recipes here...
+  {
+    id: 1,
+    name: 'Chicken Pasta',
+    image: image1,
+    rating: 4,
+    description: 'A delicious chicken pasta recipe.',
+  },
+  {
+    id: 2,
+    name: 'Raspberry Pastry',
+    image: image2,
+    rating: 5,
+    description: 'A sweet and tangy raspberry pastry.',
+  },
 ];
 
 const Recipes: React.FC = () => {
+  const [filters, setFilters] = useState({
+    cuisine: '',
+    dietary: '',
+    mealType: '',
+    difficulty: '',
+    time: '',
+    allergy: '',
+    specialDiet: '',
+  });
+
+  const handleFilterChange = (group: string, value: string) => {
+    setFilters({...filters, [group]: value});
+  };
+
   return (
     <>
       <style>
@@ -37,6 +50,7 @@ const Recipes: React.FC = () => {
             padding: 20px;
             background: #fff;
             border-right: 1px solid #ddd;
+            overflow-y: auto;
           }
 
           .sidebar h2 {
@@ -135,17 +149,152 @@ const Recipes: React.FC = () => {
 
           <div className="filter-group">
             <h4>Cuisine</h4>
-            <label><input type="checkbox" /> Italian</label>
-            <label><input type="checkbox" /> Mexican</label>
-            <label><input type="checkbox" /> Chinese</label>
-            <label><input type="checkbox" /> Indian</label>
+            {[
+              'Italian',
+              'Mexican',
+              'Chinese',
+              'Indian',
+              'Mediterranean',
+              'American',
+              'Continental',
+              'Other',
+            ].map((item) => (
+              <label key={item}>
+                <input
+                  type="radio"
+                  name="cuisine"
+                  value={item}
+                  checked={filters.cuisine === item}
+                  onChange={() => handleFilterChange('cuisine', item)}
+                />{' '}
+                {item}
+              </label>
+            ))}
           </div>
 
           <div className="filter-group">
             <h4>Dietary Preference</h4>
-            <label><input type="checkbox" /> Vegetarian</label>
-            <label><input type="checkbox" /> Vegan</label>
-            <label><input type="checkbox" /> Gluten-Free</label>
+            {[
+              'Vegetarian',
+              'Non-Veg',
+              'Vegan',
+              'Gluten-Free',
+              'Keto',
+              'Low-Carb',
+            ].map((item) => (
+              <label key={item}>
+                <input
+                  type="radio"
+                  name="dietary"
+                  value={item}
+                  checked={filters.dietary === item}
+                  onChange={() => handleFilterChange('dietary', item)}
+                />{' '}
+                {item}
+              </label>
+            ))}
+          </div>
+
+          <div className="filter-group">
+            <h4>Meal Type</h4>
+            {[
+              'Breakfast',
+              'Lunch',
+              'Snacks',
+              'Appetizers',
+              'Soups',
+              'Dinner',
+              'Deserts',
+            ].map((item) => (
+              <label key={item}>
+                <input
+                  type="radio"
+                  name="mealType"
+                  value={item}
+                  checked={filters.mealType === item}
+                  onChange={() => handleFilterChange('mealType', item)}
+                />{' '}
+                {item}
+              </label>
+            ))}
+          </div>
+
+          <div className="filter-group">
+            <h4>Difficulty Level</h4>
+            {[
+              'Easy', 
+              'Intermediate', 
+              'Hard'
+            ].map((item) => (
+              <label key={item}>
+                <input
+                  type="radio"
+                  name="difficulty"
+                  value={item}
+                  checked={filters.difficulty === item}
+                  onChange={() => handleFilterChange('difficulty', item)}
+                />{' '}
+                {item}
+              </label>
+            ))}
+          </div>
+
+          <div className="filter-group">
+            <h4>Cooking Time</h4>
+            {[
+              'Quick (Under 30 mins)',
+              'Moderate (30–60 mins)',
+              'Long (over 60 mins)',
+            ].map((item) => (
+              <label key={item}>
+                <input
+                  type="radio"
+                  name="time"
+                  value={item}
+                  checked={filters.time === item}
+                  onChange={() => handleFilterChange('time', item)}
+                />{' '}
+                {item}
+              </label>
+            ))}
+          </div>
+
+          <div className="filter-group">
+            <h4>Allergies</h4>
+            {['Nuts', 'Dairy', 'Soy', 'Shellfish', 'Other'].map((item) => (
+              <label key={item}>
+                <input
+                  type="radio"
+                  name="allergy"
+                  value={item}
+                  checked={filters.allergy === item}
+                  onChange={() => handleFilterChange('allergy', item)}
+                />{' '}
+                {item}
+              </label>
+            ))}
+          </div>
+
+          <div className="filter-group">
+            <h4>Special Diets</h4>
+            {[
+              'Diabetic-friendly', 
+              'Weight loss', 
+              'Heart-friendly'
+            ].map(
+              (item) => (
+                <label key={item}>
+                  <input
+                    type="radio"
+                    name="specialDiet"
+                    value={item}
+                    checked={filters.specialDiet === item}
+                    onChange={() => handleFilterChange('specialDiet', item)}
+                  />{' '}
+                  {item}
+                </label>
+              )
+            )}
           </div>
         </aside>
 
@@ -168,7 +317,7 @@ const Recipes: React.FC = () => {
           <div className="pagination">
             <button>1</button>
             <button>2</button>
-            <button>3</button>
+            {/* <button>3</button> */}
             <span>...</span>
             <button>Next ›</button>
           </div>
