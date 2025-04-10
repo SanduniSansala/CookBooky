@@ -1,40 +1,38 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import bgImage from '../assets/7.jpg'; // ✅ Import the image
+import bgImage from '../assets/7.jpg'; // Your background image
 
-const Login:React.FC = () => {
+const Login: React.FC = () => {
   const navigate = useNavigate();
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  const handleLogin = () => {
+    const storedUser = localStorage.getItem('user');
+    if (!storedUser) {
+      alert("No user found. Please sign up.");
+      return;
+    }
+
+    const user = JSON.parse(storedUser);
+    if (email === user.email && password === user.password) {
+      alert("Login successful!");
+      navigate('/');
+    } else {
+      alert("Invalid email or password");
+    }
+  };
 
   return (
     <div className="auth-container">
       <div className="form-side">
         <h2>LOG IN</h2>
-        <input type="email" placeholder="Email" />
-        <input type="password" placeholder="Password" />
+        <input type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} />
+        <input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} />
+        
+        <button className="main-btn" onClick={handleLogin}>LOGIN</button>
 
-        <div className="options-row">
-          <label>
-            <input type="checkbox" /> Remember Me?
-          </label>
-          <span className="forgot">Forgot Password</span>
-        </div>
-
-        <button className="main-btn">LOGIN</button>
-
-        <div className="divider">
-          <hr />
-          <span>or</span>
-          <hr />
-        </div>
-
-        <div className="social-login">
-          <button className="icon-btn">🔵</button>
-          <button className="icon-btn">⚫</button>
-        </div>
-
-        <p className="toggle-link" onClick={() => navigate('/signup')}>
-          Sign up
-        </p>
+        <p className="toggle-link" onClick={() => navigate('/signup')}>Sign up</p>
       </div>
 
       <div className="image-side" style={{ backgroundImage: `url(${bgImage})` }}></div>
@@ -53,6 +51,8 @@ const Login:React.FC = () => {
           display: flex;
           flex-direction: column;
           justify-content: center;
+          background-color: white; /* White background for the login form */
+          color: black;
         }
 
         .form-side h2 {
@@ -64,21 +64,9 @@ const Login:React.FC = () => {
           padding: 0.75rem;
           margin-bottom: 1rem;
           border-radius: 5px;
-          border: none;
-          background: #e2e2e2;
+          border: 1px solid #ccc;
+          background: #f5f5f5;
           font-size: 1rem;
-        }
-
-        .options-row {
-          display: flex;
-          justify-content: space-between;
-          font-size: 0.8rem;
-          margin-bottom: 1rem;
-        }
-
-        .forgot {
-          cursor: pointer;
-          color: gray;
         }
 
         .main-btn {
@@ -91,42 +79,15 @@ const Login:React.FC = () => {
           cursor: pointer;
         }
 
-        .divider {
-          display: flex;
-          align-items: center;
-          margin: 1.5rem 0;
-        }
-
-        .divider hr {
-          flex: 1;
-          height: 1px;
-          background-color: #ccc;
-          border: none;
-        }
-
-        .divider span {
-          margin: 0 1rem;
-          font-size: 0.8rem;
-        }
-
-        .social-login {
-          display: flex;
-          gap: 1rem;
-          justify-content: center;
-          margin-bottom: 1rem;
-        }
-
-        .icon-btn {
-          font-size: 1.5rem;
-          background: none;
-          border: none;
-          cursor: pointer;
-        }
-
         .toggle-link {
           text-align: center;
           font-size: 0.9rem;
           cursor: pointer;
+          color: #facc15;
+        }
+
+        .toggle-link:hover {
+          text-decoration: underline;
         }
 
         .image-side {
@@ -135,7 +96,7 @@ const Login:React.FC = () => {
           background-size: cover;
           background-position: center;
         }
-      `}
+        `}
       </style>
     </div>
   );

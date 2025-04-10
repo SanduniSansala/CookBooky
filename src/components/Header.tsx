@@ -1,8 +1,10 @@
 import React from 'react';
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from 'react-router-dom';
+import HeaderAfterLogin from './HeaderAfterLogin'; // Import HeaderAfterLogin
 
 const Header: React.FC = () => {
   const navigate = useNavigate();
+
 
   const handleLogin = () => {
     navigate('/login');
@@ -16,8 +18,22 @@ const Header: React.FC = () => {
     navigate('/');
   };
 
+  const isLoggedIn = localStorage.getItem('loggedIn') === 'true'; // Check if user is logged in
+
   return (
     <>
+      {isLoggedIn ? (
+        <HeaderAfterLogin /> // If logged in, show HeaderAfterLogin
+      ) : (
+        <header className="header">
+          <div className="logo" onClick={handleLogoClick}>CooKBooKY</div>
+          <div className="nav-buttons">
+            <button className="nav-button" onClick={handleLogin}>Login</button>
+            <button className="nav-button" onClick={handleSignup}>Sign up</button>
+          </div>
+        </header>
+      )}
+
       <style>
         {`
           .header {
@@ -71,14 +87,6 @@ const Header: React.FC = () => {
           }
         `}
       </style>
-
-      <header className="header">
-        <div className="logo" onClick={handleLogoClick}>CooKBooKY</div>
-        <div className="nav-buttons">
-          <button className="nav-button" onClick={handleLogin}>Login</button>
-          <button className="nav-button" onClick={handleSignup}>Sign up</button>
-        </div>
-      </header>
     </>
   );
 };

@@ -1,14 +1,27 @@
 import React from 'react';
 import pancake from '../assets/10.jpg';
-import Header from '../components/Header';
 import Footer from '../components/Footer';
 import { useNavigate } from 'react-router-dom';
+import Header from '../components/Header';
 
 const Home: React.FC = () => {
   const navigate = useNavigate();
 
+  // Check if the user is logged in
+  const isLoggedIn = JSON.parse(localStorage.getItem('loggedIn') || 'false');
+
   const handleSearchClick = () => {
-    navigate('/UploadRecipe');
+    navigate('/ViewAllRecipe');
+  };
+
+  const handleAddRecipeClick = () => {
+    if (!isLoggedIn) {
+      // If not logged in, redirect to sign-in page
+      navigate('/login');
+    } else {
+      // If logged in, allow them to navigate to Add Recipe page
+      navigate('/UploadRecipe');
+    }
   };
 
   return (
@@ -119,7 +132,7 @@ const Home: React.FC = () => {
 
           <div className="add-recipe-container">
             <div className="add-recipe-text">Click here to add new recipe</div>
-            <button className="add-recipe-button" onClick={() => navigate('/UploadRecipe')}>
+            <button className="add-recipe-button" onClick={handleAddRecipeClick}>
               ADD RECIPE
             </button>
           </div>
