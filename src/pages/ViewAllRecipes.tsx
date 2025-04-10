@@ -1,181 +1,146 @@
-import React, { useEffect, useState } from 'react';
-import { getRecipesFromLocalStorage,  Recipe } from '../utils/localStorageUtils';
+import React, { useState } from 'react';
+import pancake from '../assets/10.jpg';
+import Footer from '../components/Footer';
+import { useNavigate } from 'react-router-dom';
+import Header from '../components/Header';
 
-import Header from '../components/Header'; 
-import Footer from '../components/Footer'; 
+const Home: React.FC = () => {
+  const navigate = useNavigate();
+  const [searchTerm, setSearchTerm] = useState('');
 
-const ViewAllRecipe: React.FC = () => {
-  const [recipes, setRecipes] = useState<Recipe[]>([]);
+  const isLoggedIn = JSON.parse(localStorage.getItem('loggedIn') || 'false');
 
-  useEffect(() => {
-    const storedRecipes = getRecipesFromLocalStorage();
-    setRecipes(storedRecipes);
-  }, []);
+  const handleSearchClick = () => {
+    navigate(`/ViewAllRecipe?search=${encodeURIComponent(searchTerm)}`);
+  };
 
-  if (recipes.length === 0) return <p>No recipes found in local storage.</p>;
-  
-    return (
-      <div>
-        <Header/>
-        <div className="view-container">
-          
-          {recipes.map((recipe) => (
-            <div key={recipe.id} className="recipe-card">
-              <div className="recipe-header">
-                <h2>{recipe.recipeName}</h2>
-                <span className="recipe-info">Calories: {recipe.caloryCount}</span>
-              </div>
-              <div className="recipe-body">
-                <p><strong>Ingredients:</strong> {recipe.ingredients}</p>
-                <p><strong>Procedure:</strong> {recipe.procedure}</p>
-                <p><strong>Nutrition:</strong> {recipe.nutritionValues}</p>
-  
-                <h4>Filters:</h4>
-                <ul>
-                  <li><strong>Cuisine:</strong> {recipe.cuisine}</li>
-                  <li><strong>Dietary:</strong> {recipe.dietary}</li>
-                  <li><strong>Meal Type:</strong> {recipe.mealType}</li>
-                  <li><strong>Difficulty:</strong> {recipe.difficulty}</li>
-                  <li><strong>Time:</strong> {recipe.time}</li>
-                  <li><strong>Allergy:</strong> {recipe.allergy}</li>
-                  <li><strong>Special Diet:</strong> {recipe.specialDiet}</li>
-                </ul>
-              </div>
-  
-              
-            </div>
-          ))}
+  const handleAddRecipeClick = () => {
+    if (!isLoggedIn) {
+      navigate('/login');
+    } else {
+      navigate('/UploadRecipe');
+    }
+  };
+
+  return (
+    <>
+      <style>
+        {`
+          .home-container {
+            position: relative;
+            min-height: 100vh;
+            background-color: black;
+            color: white;
+            overflow: hidden;
+            font-family: sans-serif;
+          }
+
+          .background-image {
+            position: absolute;
+            width: 100vw;
+            height: auto;
+            max-height: 100vh;
+            object-fit: cover;
+            opacity: 0.5;
+            top: 0;
+            left: 0;
+            z-index: 0;
+            filter: brightness(0.8);
+          }
+
+          .overlay-content {
+            position: relative;
+            z-index: 1;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 2rem;
+          }
+
+          .search-bar {
+            display: flex;
+            align-items: center;
+            max-width: 600px;
+            width: 100%;
+            margin: 0 auto;
+            position: relative;
+          }
+
+          .search-input {
+            flex: 1;
+            padding: 0.75rem 2.5rem 0.75rem 1rem;
+            border-radius: 9999px;
+            border: none;
+            outline: none;
+            color: black;
+            font-size: 1rem;
+          }
+
+          .search-icon {
+            position: absolute;
+            right: 1rem;
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+          }
+
+          .add-recipe-container {
+            text-align: left;
+          }
+
+          .add-recipe-text {
+            margin-bottom: 0.5rem;
+            font-size: 0.875rem;
+            padding-top: 20.5rem;
+          }
+
+          .add-recipe-button {
+            background-color: #facc15;
+            color: black;
+            font-weight: bold;
+            border: none;
+            border-radius: 9999px;
+            padding: 0.5rem 1.5rem;
+            cursor: pointer;
+            font-size: 1rem;
+          }
+        `}
+      </style>
+
+      <Header />
+      <div className="home-container">
+        <img src={pancake} alt="Pancakes" className="background-image" />
+
+        <div className="overlay-content">
+          <div className="search-bar">
+            <input
+              type="text"
+              placeholder="Search for recipes"
+              className="search-input"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+            />
+            <img
+              src="https://img.icons8.com/ios-filled/50/000000/search--v1.png"
+              alt="Search Icon"
+              className="search-icon"
+              onClick={handleSearchClick}
+            />
+          </div>
+
+          <div className="add-recipe-container">
+            <div className="add-recipe-text">Click here to add new recipe</div>
+            <button className="add-recipe-button" onClick={handleAddRecipeClick}>
+              ADD RECIPE
+            </button>
+          </div>
         </div>
-        <Footer/>
-  
-        <style>
-          {`
-            .view-container {
-              max-width: 900px;
-              margin: 2rem auto;
-              padding: 1rem;
-              font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-              background-color: #f7fafc;
-              border-radius: 8px;
-              box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-            }
-  
-            h1 {
-              font-size: 2.5rem;
-              font-weight: bold;
-              text-align: center;
-              margin-bottom: 2rem;
-              color: #4f46e5;
-            }
-  
-            .recipe-card {
-              background-color: #fff;
-              padding: 2rem;
-              margin-bottom: 1.5rem;
-              border-radius: 12px;
-              box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-              transition: transform 0.3s, box-shadow 0.3s;
-            }
-  
-            .recipe-card:hover {
-              transform: translateY(-10px);
-              box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
-            }
-  
-            .recipe-header {
-              display: flex;
-              justify-content: space-between;
-              align-items: center;
-              margin-bottom: 1.5rem;
-            }
-  
-            .recipe-header h2 {
-              font-size: 1.8rem;
-              font-weight: 600;
-              color: #333;
-              margin: 0;
-            }
-  
-            .recipe-info {
-              font-size: 1rem;
-              color: #4caf50;
-              font-weight: bold;
-            }
-  
-            .recipe-body {
-              margin-bottom: 1.5rem;
-            }
-  
-            .recipe-body p {
-              font-size: 1.1rem;
-              color: #555;
-            }
-  
-            .recipe-body h4 {
-              margin-top: 1.5rem;
-              font-size: 1.3rem;
-              color: #333;
-            }
-  
-            ul {
-              list-style-type: none;
-              padding-left: 0;
-              margin-top: 1rem;
-            }
-  
-            ul li {
-              font-size: 1.1rem;
-              color: #555;
-              margin-bottom: 0.5rem;
-            }
-  
-            ul li strong {
-              font-weight: bold;
-            }
-  
-            .recipe-footer {
-              display: flex;
-              justify-content: space-between;
-              margin-top: 2rem;
-            }
-  
-            .edit-button {
-              padding: 0.8rem 1.5rem;
-              font-size: 1.1rem;
-              font-weight: bold;
-              background-color: #4caf50;
-              color: white;
-              border: none;
-              border-radius: 6px;
-              cursor: pointer;
-              text-decoration: none;
-              transition: background-color 0.3s;
-            }
-  
-            .edit-button:hover {
-              background-color: #45a049;
-            }
-  
-            button {
-              padding: 0.8rem 1.5rem;
-              font-size: 1.1rem;
-              font-weight: bold;
-              background-color: #ef4444;
-              color: #fff;
-              border: none;
-              border-radius: 6px;
-              cursor: pointer;
-              transition: background-color 0.3s;
-            }
-  
-            button:hover {
-              background-color: #dc2626;
-            }
-          `}
-        </style>
       </div>
-      
-    );
+      <Footer />
+    </>
+  );
 };
 
-export default ViewAllRecipe;
+export default Home;

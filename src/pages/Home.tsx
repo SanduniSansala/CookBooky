@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import pancake from '../assets/10.jpg';
 import Footer from '../components/Footer';
 import { useNavigate } from 'react-router-dom';
@@ -6,20 +6,18 @@ import Header from '../components/Header';
 
 const Home: React.FC = () => {
   const navigate = useNavigate();
+  const [searchTerm, setSearchTerm] = useState('');
 
-  
   const isLoggedIn = JSON.parse(localStorage.getItem('loggedIn') || 'false');
 
   const handleSearchClick = () => {
-    navigate('/ViewAllRecipe');
+    navigate(`/ViewAllRecipe?search=${encodeURIComponent(searchTerm)}`);
   };
 
   const handleAddRecipeClick = () => {
     if (!isLoggedIn) {
-      
       navigate('/login');
     } else {
-      
       navigate('/UploadRecipe');
     }
   };
@@ -121,6 +119,8 @@ const Home: React.FC = () => {
               type="text"
               placeholder="Search for recipes"
               className="search-input"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
             />
             <img
               src="https://img.icons8.com/ios-filled/50/000000/search--v1.png"
