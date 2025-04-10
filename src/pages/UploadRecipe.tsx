@@ -21,7 +21,7 @@ const UploadRecipe: React.FC = () => {
     allergy: '',
     specialDiet: '',
     images: [],
-    email: '', // Added email field
+    email: '', 
   });
 
   
@@ -61,7 +61,7 @@ const UploadRecipe: React.FC = () => {
       const newRecipe: Recipe = {
         ...formData,
         id: Date.now(),
-        email: userEmail, // Added email field
+        email: userEmail, 
       };
       addRecipeToLocalStorage(newRecipe);
       alert('Recipe added successfully!');

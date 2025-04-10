@@ -1,21 +1,20 @@
 import React from 'react';
-import { Link, useNavigate } from 'react-router-dom'; // import useNavigate for programmatic navigation
+import { Link, useNavigate } from 'react-router-dom'; 
 
 const HeaderAfterLogin: React.FC = () => {
-  const navigate = useNavigate(); // Initialize the navigate function
+  const navigate = useNavigate(); 
   const user = JSON.parse(localStorage.getItem('user') || '{}');
-  const userName = user?.name || 'Guest'; // Default to 'Guest' if no name is found
-
-  // Function to handle logout
+  const userName = user?.name || 'Guest'; 
+  
   const handleLogout = () => {
-    localStorage.removeItem('user'); // Remove user data from localStorage
-    localStorage.setItem('loggedIn', 'false'); // Mark the user as logged out
+    localStorage.removeItem('user'); 
+    localStorage.setItem('loggedIn', 'false'); 
 
-    navigate('/login'); // Redirect to the login page
+    navigate('/login'); 
   };
 
   const handleView = () => {
-    navigate('/ViewRecipe'); // Redirect to the ViewRecipe page
+    navigate('/ViewRecipe'); 
   };
 
   return (
@@ -26,7 +25,7 @@ const HeaderAfterLogin: React.FC = () => {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background-color: black;  /* Set background color to black */
+            background-color: black; 
             padding: 1rem 2rem;
             color: white;
             font-family: sans-serif;
@@ -78,13 +77,13 @@ const HeaderAfterLogin: React.FC = () => {
             border-radius: 5px;
             cursor: pointer;
             color: white;
-            margin-left: 1rem; /* Space between profile section and logout button */
+            margin-left: 1rem; 
           }
 
           .profile-section {
             display: flex;
             align-items: center; 
-            gap: 1rem; /* Space between profile icon and name */
+            gap: 1rem; 
           }
         `}
       </style>

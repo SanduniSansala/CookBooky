@@ -1,7 +1,6 @@
 import React, { useState} from 'react';
 
 const EditProfile: React.FC = () => {
-  // Retrieve the current user's data from localStorage
   const storedUser = localStorage.getItem('user');
   const user = storedUser ? JSON.parse(storedUser) : null;
 

@@ -7,7 +7,7 @@ import Header from '../components/Header';
 const Home: React.FC = () => {
   const navigate = useNavigate();
 
-  // Check if the user is logged in
+  
   const isLoggedIn = JSON.parse(localStorage.getItem('loggedIn') || 'false');
 
   const handleSearchClick = () => {
@@ -16,10 +16,10 @@ const Home: React.FC = () => {
 
   const handleAddRecipeClick = () => {
     if (!isLoggedIn) {
-      // If not logged in, redirect to sign-in page
+      
       navigate('/login');
     } else {
-      // If logged in, allow them to navigate to Add Recipe page
+      
       navigate('/UploadRecipe');
     }
   };

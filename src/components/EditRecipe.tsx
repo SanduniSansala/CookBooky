@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { getRecipesFromLocalStorage } from '../utils/localStorageUtils';
 
 const ViewRecipe: React.FC = () => {
-  const recipes = getRecipesFromLocalStorage();  // Get the recipes from localStorage
+  const recipes = getRecipesFromLocalStorage(); 
 
   return (
     <div className="view-container">
@@ -15,7 +15,7 @@ const ViewRecipe: React.FC = () => {
           recipes.map((recipe) => (
             <div key={recipe.id} className="recipe-card">
               <h2>{recipe.recipeName}</h2>
-              <Link to={`/edit-recipe/${recipe.id}`}>Edit Recipe</Link>  {/* Correct link */}
+              <Link to={`/edit-recipe/${recipe.id}`}>Edit Recipe</Link>  {}
             </div>
           ))
         )}
@@ -38,8 +38,8 @@ const ViewRecipe: React.FC = () => {
 
           .recipe-list {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);  /* 3 cards per row */
-            gap: 20px;  /* Space between cards */
+            grid-template-columns: repeat(3, 1fr);  
+            gap: 20px;  
             margin-top: 2rem;
           }
 

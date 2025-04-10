@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import bgImage from '../assets/7.jpg'; // Your background image
+import bgImage from '../assets/7.jpg'; 
 
 const Login: React.FC = () => {
   const navigate = useNavigate();
@@ -51,7 +51,7 @@ const Login: React.FC = () => {
           display: flex;
           flex-direction: column;
           justify-content: center;
-          background-color: white; /* White background for the login form */
+          background-color: white; 
           color: black;
         }
 

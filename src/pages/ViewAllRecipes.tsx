@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { getRecipesFromLocalStorage, clearAllRecipesFromLocalStorage, Recipe } from '../utils/localStorageUtils';
-import { Link } from 'react-router-dom';
-import Header from '../components/Header'; // Import Header component
-import Footer from '../components/Footer'; // Import Footer component
+import { getRecipesFromLocalStorage,  Recipe } from '../utils/localStorageUtils';
+
+import Header from '../components/Header'; 
+import Footer from '../components/Footer'; 
 
 const ViewAllRecipe: React.FC = () => {
   const [recipes, setRecipes] = useState<Recipe[]>([]);

@@ -1,7 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import HeaderAfterLogin from './HeaderAfterLogin'; // Import HeaderAfterLogin
-
+import HeaderAfterLogin from './HeaderAfterLogin'; 
 const Header: React.FC = () => {
   const navigate = useNavigate();
 
@@ -18,12 +17,11 @@ const Header: React.FC = () => {
     navigate('/');
   };
 
-  const isLoggedIn = localStorage.getItem('loggedIn') === 'true'; // Check if user is logged in
-
+  const isLoggedIn = localStorage.getItem('loggedIn') === 'true'; 
   return (
     <>
       {isLoggedIn ? (
-        <HeaderAfterLogin /> // If logged in, show HeaderAfterLogin
+        <HeaderAfterLogin /> 
       ) : (
         <header className="header">
           <div className="logo" onClick={handleLogoClick}>CooKBooKY</div>

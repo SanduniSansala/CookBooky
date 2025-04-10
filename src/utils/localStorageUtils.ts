@@ -1,4 +1,3 @@
-const userEmail = localStorage.getItem('loggedInUserEmail') || '';
 export type Recipe = {
     id: number;
     recipeName: string;
@@ -14,28 +13,9 @@ export type Recipe = {
     allergy: string;
     specialDiet: string;
     images: string[];
-    email: string; // 🆕 Add this
+    email: string; 
   };
-  
-
-
-// export interface Recipe {
-//     id: number;
-//     recipeName: string;
-//     ingredients: string;
-//     procedure: string;
-//     caloryCount: string;
-//     nutritionValues: string;
-//     cuisine: string;
-//     dietary: string;
-//     mealType: string;
-//     difficulty: string;
-//     time: string;
-//     allergy: string;
-//     specialDiet: string;
-//     images: string[]; // optional, if you handle images
-//   }
-  
+ 
   const RECIPES_KEY = 'recipes';
   
   export const getRecipesFromLocalStorage = (): Recipe[] => {
@@ -62,7 +42,7 @@ export const updateRecipeInLocalStorage = (updatedRecipe: Recipe) => {
     const recipes = getRecipesFromLocalStorage();
     const index = recipes.findIndex((r) => r.id === updatedRecipe.id);
     if (index !== -1) {
-      recipes[index] = updatedRecipe; // Update the recipe at the index
+      recipes[index] = updatedRecipe; 
       localStorage.setItem('recipes', JSON.stringify(recipes));
     }
   };

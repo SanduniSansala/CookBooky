@@ -11,8 +11,8 @@ const ViewRecipe: React.FC = () => {
   }, []);
 
   const handleDeleteRecipe = (id: number) => {
-    removeRecipeFromLocalStorage(id); // Remove the specific recipe from localStorage
-    setRecipes(recipes.filter(recipe => recipe.id !== id)); // Remove from state
+    removeRecipeFromLocalStorage(id); 
+    setRecipes(recipes.filter(recipe => recipe.id !== id)); 
   };
 
   if (recipes.length === 0) return <p>No recipes found in local storage.</p>;
@@ -41,8 +41,7 @@ const ViewRecipe: React.FC = () => {
                 <li><strong>Time:</strong> {recipe.time}</li>
                 <li><strong>Allergy:</strong> {recipe.allergy}</li>
                 <li><strong>Special Diet:</strong> {recipe.specialDiet}</li>
-                {/* Add password or sensitive field display if needed */}
-                {/* <li><strong>Password:</strong> {recipe.password}</li> Not recommended */}
+                
               </ul>
             </div>
 

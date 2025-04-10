@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import bgImage from '../assets/7.jpg'; // Your background image
+import bgImage from '../assets/7.jpg'; 
 
 const SignUp: React.FC = () => {
   const navigate = useNavigate();
@@ -10,7 +10,7 @@ const SignUp: React.FC = () => {
   const [error, setError] = useState<string>('');
 
   const validateEmail = (email: string) => {
-    // Simple email validation regex
+    
     const regex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
     return regex.test(email);
   };
@@ -33,7 +33,7 @@ const SignUp: React.FC = () => {
 
     const userData = { name, email, password };
     localStorage.setItem('user', JSON.stringify(userData));
-    localStorage.setItem('loggedIn', 'true'); // Mark user as logged in
+    localStorage.setItem('loggedIn', 'true'); 
     alert("Signup successful!");
     navigate('/login');
   };

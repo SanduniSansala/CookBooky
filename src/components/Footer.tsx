@@ -63,7 +63,7 @@ const Footer: React.FC = () => {
       </style>
 
       <footer className="footer">
-        {/* About Us */}
+        
         <div className="footer-section">
           <h3>About Us</h3>
           <p>
@@ -83,7 +83,7 @@ const Footer: React.FC = () => {
           </div>
         </div>
 
-        {/* Learn More */}
+        
         <div className="footer-section">
           <h3>Learn More</h3>
           <a href="#">CookBook Community</a>
@@ -92,7 +92,7 @@ const Footer: React.FC = () => {
           <a href="#">Terms of Service</a>
           <a href="#">Privacy Policy</a>
 
-          {/* Social Icons (aligned as part of Learn More) */}
+          
         <div className="social-icons">
           <a href="#"><img src="https://img.icons8.com/ios-filled/50/000000/instagram-new.png" alt="Instagram" /></a>
           <a href="#"><img src="https://img.icons8.com/color/48/000000/facebook-new.png" alt="Facebook" /></a>
