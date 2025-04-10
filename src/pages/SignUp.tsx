@@ -1,41 +1,71 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import bgImage from '../assets/7.jpg'; // ✅ Image එක import කරලා තියනවා
+import bgImage from '../assets/7.jpg'; // Your background image
 
-const SignUp:React.FC = () => {
+const SignUp: React.FC = () => {
   const navigate = useNavigate();
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState<string>('');
+
+  const validateEmail = (email: string) => {
+    // Simple email validation regex
+    const regex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+    return regex.test(email);
+  };
+
+  const handleSignUp = () => {
+    if (!name || !email || !password) {
+      setError("Please fill in all fields");
+      return;
+    }
+
+    if (!validateEmail(email)) {
+      setError("Please enter a valid email address");
+      return;
+    }
+
+    if (password.length < 6) {
+      setError("Password must be at least 6 characters long");
+      return;
+    }
+
+    const userData = { name, email, password };
+    localStorage.setItem('user', JSON.stringify(userData));
+    localStorage.setItem('loggedIn', 'true'); // Mark user as logged in
+    alert("Signup successful!");
+    navigate('/login');
+  };
 
   return (
     <div className="auth-container">
       <div className="form-side">
         <h2>SIGN UP</h2>
-        <input type="text" placeholder="Name" />
-        <input type="email" placeholder="Email" />
-        <input type="password" placeholder="Password" />
+        <input 
+          type="text" 
+          placeholder="Name" 
+          value={name} 
+          onChange={(e) => setName(e.target.value)} 
+        />
+        <input 
+          type="email" 
+          placeholder="Email" 
+          value={email} 
+          onChange={(e) => setEmail(e.target.value)} 
+        />
+        <input 
+          type="password" 
+          placeholder="Password" 
+          value={password} 
+          onChange={(e) => setPassword(e.target.value)} 
+        />
 
-        <div className="options-row">
-          <label>
-            <input type="checkbox" /> Remember Me?
-          </label>
-          <span className="forgot">Forgot Password</span>
-        </div>
+        {error && <p className="error-message">{error}</p>}
 
-        <button className="main-btn">SIGN UP</button>
+        <button className="main-btn" onClick={handleSignUp}>SIGN UP</button>
 
-        <div className="divider">
-          <hr />
-          <span>or</span>
-          <hr />
-        </div>
-
-        <div className="social-login">
-          <button className="icon-btn">🔵</button>
-          <button className="icon-btn">⚫</button>
-        </div>
-
-        <p className="toggle-link" onClick={() => navigate('/login')}>
-          Login
-        </p>
+        <p className="toggle-link" onClick={() => navigate('/login')}>Login</p>
       </div>
 
       <div className="image-side" style={{ backgroundImage: `url(${bgImage})` }}></div>
@@ -71,18 +101,6 @@ const SignUp:React.FC = () => {
           font-size: 1rem;
         }
 
-        .options-row {
-          display: flex;
-          justify-content: space-between;
-          font-size: 0.8rem;
-          margin-bottom: 1rem;
-        }
-
-        .forgot {
-          cursor: pointer;
-          color: gray;
-        }
-
         .main-btn {
           background-color: #efc75e;
           border: none;
@@ -90,38 +108,6 @@ const SignUp:React.FC = () => {
           font-weight: bold;
           font-size: 1rem;
           border-radius: 5px;
-          cursor: pointer;
-        }
-
-        .divider {
-          display: flex;
-          align-items: center;
-          margin: 1.5rem 0;
-        }
-
-        .divider hr {
-          flex: 1;
-          height: 1px;
-          background-color: #ccc;
-          border: none;
-        }
-
-        .divider span {
-          margin: 0 1rem;
-          font-size: 0.8rem;
-        }
-
-        .social-login {
-          display: flex;
-          gap: 1rem;
-          justify-content: center;
-          margin-bottom: 1rem;
-        }
-
-        .icon-btn {
-          font-size: 1.5rem;
-          background: none;
-          border: none;
           cursor: pointer;
         }
 
@@ -137,7 +123,13 @@ const SignUp:React.FC = () => {
           background-size: cover;
           background-position: center;
         }
-      `}
+
+        .error-message {
+          color: red;
+          font-size: 0.9rem;
+          margin-bottom: 1rem;
+        }
+        `}
       </style>
     </div>
   );
